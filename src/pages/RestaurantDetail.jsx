@@ -16,15 +16,10 @@ function RestaurantDetail() {
   const [loading, setLoading] = useState(true);
   const [addedItems, setAddedItems] = useState(new Set());
 
-  useEffect(() => {
-    loadRestaurantData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadRestaurantData]);
-
+  // Define loadRestaurantData BEFORE useEffect
   const loadRestaurantData = useCallback(async () => {
     setLoading(true);
     
-    // Get restaurant info
     const restaurantInfo = cuisineToRestaurant[cuisine];
     if (!restaurantInfo) {
       setLoading(false);
@@ -33,16 +28,19 @@ function RestaurantDetail() {
     
     setRestaurant({ ...restaurantInfo, cuisine });
     
-    // Get meals for this cuisine
     const mealsData = await getMealsByCuisine(cuisine);
     setMeals(mealsData);
     setLoading(false);
   }, [cuisine]);
 
+  // Now useEffect can use it
+  useEffect(() => {
+    loadRestaurantData();
+  }, [loadRestaurantData]);
+
   const handleAddToCart = (meal) => {
     addToCart(meal, restaurant.name);
     
-    // Show feedback
     setAddedItems(prev => new Set(prev).add(meal.idMeal));
     setTimeout(() => {
       setAddedItems(prev => {
