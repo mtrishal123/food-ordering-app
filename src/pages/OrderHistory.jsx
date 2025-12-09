@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../hooks/useAuth';
@@ -10,7 +10,7 @@ function OrderHistory() {
   const [orders, setOrders] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [newOrder, setNewOrder] = useState(null);
-
+    
   useEffect(() => {
     loadOrders();
     
@@ -30,7 +30,7 @@ function OrderHistory() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
-  const loadOrders = () => {
+  const loadOrders = useCallback(() => {
     const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');
     const userOrders = allOrders.filter(order => order.userId === user.id);
     
@@ -38,7 +38,7 @@ function OrderHistory() {
     userOrders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
     
     setOrders(userOrders);
-  };
+  }, [user.id]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { getAllCuisines } from '../services/api';
@@ -14,30 +14,11 @@ function Home() {
   const [sortBy, setSortBy] = useState('name');
   const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  loadCuisines();
-}, []);
+  useEffect(() => {
+    loadCuisines();
+  }, []);
 
-// eslint-disable-next-line react-hooks/exhaustive-deps
-useEffect(() => {
-  filterAndSortCuisines();
-}, [searchQuery, sortBy, cuisines]);
-
-  const loadCuisines = () => {
-    setLoading(true);
-    const allCuisines = getAllCuisines();
-    
-    const restaurants = allCuisines.map(cuisine => {
-      const restaurantData = cuisineToRestaurant[cuisine];
-      return restaurantData ? { ...restaurantData, cuisine } : null;
-    }).filter(Boolean);
-    
-    setCuisines(restaurants);
-    setFilteredCuisines(restaurants);
-    setLoading(false);
-  };
-
-  const filterAndSortCuisines = () => {
+  const filterAndSortCuisines = useCallback(() => {
     let filtered = [...cuisines];
     
     if (searchQuery) {
@@ -55,6 +36,24 @@ useEffect(() => {
     }
     
     setFilteredCuisines(filtered);
+  }, [cuisines, searchQuery, sortBy]);
+
+  useEffect(() => {
+    filterAndSortCuisines();
+  }, [filterAndSortCuisines]);
+
+  const loadCuisines = () => {
+    setLoading(true);
+    const allCuisines = getAllCuisines();
+    
+    const restaurants = allCuisines.map(cuisine => {
+      const restaurantData = cuisineToRestaurant[cuisine];
+      return restaurantData ? { ...restaurantData, cuisine } : null;
+    }).filter(Boolean);
+    
+    setCuisines(restaurants);
+    setFilteredCuisines(restaurants);
+    setLoading(false);
   };
 
   const handleSearch = (query) => {

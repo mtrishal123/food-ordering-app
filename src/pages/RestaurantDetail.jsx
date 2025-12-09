@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { getMealsByCuisine } from '../services/api';
@@ -19,9 +19,9 @@ function RestaurantDetail() {
   useEffect(() => {
     loadRestaurantData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cuisine]);
+  }, [loadRestaurantData]);
 
-  const loadRestaurantData = async () => {
+  const loadRestaurantData = useCallback(async () => {
     setLoading(true);
     
     // Get restaurant info
@@ -37,7 +37,7 @@ function RestaurantDetail() {
     const mealsData = await getMealsByCuisine(cuisine);
     setMeals(mealsData);
     setLoading(false);
-  };
+  }, [cuisine]);
 
   const handleAddToCart = (meal) => {
     addToCart(meal, restaurant.name);
