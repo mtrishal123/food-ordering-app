@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# Food Ordering App - Project Documentation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Live Deployment
+🌐 **URL**: https://onlineorderfood.netlify.app/
 
-## Available Scripts
+## GitHub Repository
+📦 **Repo**: https://github.com/mtrishal123/food-ordering-app
 
-In the project directory, you can run:
+## Lighthouse Scores
+- **Performance**: 75/100
+- **Accessibility**: 94/100
+- **Best Practices**: 100/100
+- **SEO**: 100/100 
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### API Integration (20 points) 
+- **API Used**: TheMealDB API (https://www.themealdb.com/api.php)
+- **Why chosen**: Free tier with unlimited requests, real food data with images
+- **Alternative considered**: Spoonacular (limited free tier), Yelp (requires approval)
+- **Endpoints used**:
+  - `GET /search.php?s={query}` - Search meals by name
+  - `GET /filter.php?a={cuisine}` - Filter meals by cuisine type
+  - `GET /lookup.php?i={id}` - Get detailed meal information
+  - `GET /categories.php` - List all meal categories
 
-### `npm test`
+**Business Objects**:
+1. **Restaurants** (26 different cuisines)
+2. **Menu Items** (meals from API)
+3. **Users** (authentication system)
+4. **Orders** (order history)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Use Cases**:
+1. **Browse and order food**: Search restaurants, filter by cuisine/rating, view menus, add to cart, checkout
+2. **User account management**: Signup, login, logout, view order history
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Technique 1: Custom React Hook - useLocalStorage**
+- **Location**: `src/hooks/useLocalStorage.js`
+- **Purpose**: Automatically synchronize React state with browser localStorage
+- **Usage**: Cart persistence, user authentication
+- **Benefits**: Data survives page refreshes, automatic sync, reusable across components
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Technique 2: Context API + Custom Hooks**
+- **Locations**: 
+  - `src/context/AuthContext.jsx` + `src/hooks/useAuth.js`
+  - `src/context/CartContext.jsx` with `useCart()` hook
+- **Purpose**: Global state management for authentication and shopping cart
+- **Benefits**: Eliminates prop drilling, centralizes business logic, clean component code
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Both techniques were not covered in class and demonstrate advanced React patterns.
 
-### `npm run eject`
+## Technical Stack
+- React 19.2.1
+- React Router DOM 7.1.1
+- React Helmet Async 2.0.5
+- TheMealDB API
+- CSS3 (custom styling)
+- Netlify (deployment)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Key Features
+- 26+ restaurants across different cuisines
+- Real-time search and filtering
+- Persistent shopping cart (localStorage)
+- User authentication system
+- Complete checkout flow
+- Order history tracking
+- Responsive design (mobile/tablet/desktop)
+- Protected routes for authenticated users
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Team Members
+- Trishal Varma Mudunuri
+- Hanlin Cheng
+- Shuhao Hu
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Deployment
+Deployed on Netlify with automatic builds from GitHub main branch.
