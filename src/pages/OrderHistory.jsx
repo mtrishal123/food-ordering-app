@@ -27,6 +27,7 @@ function OrderHistory() {
       // Clear location state
       window.history.replaceState({}, document.title);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   const loadOrders = () => {

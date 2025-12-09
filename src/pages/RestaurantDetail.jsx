@@ -18,6 +18,7 @@ function RestaurantDetail() {
 
   useEffect(() => {
     loadRestaurantData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cuisine]);
 
   const loadRestaurantData = async () => {

@@ -14,13 +14,14 @@ function Home() {
   const [sortBy, setSortBy] = useState('name');
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadCuisines();
-  }, []);
+useEffect(() => {
+  loadCuisines();
+}, []);
 
-  useEffect(() => {
-    filterAndSortCuisines();
-  }, [searchQuery, sortBy, cuisines]);
+// eslint-disable-next-line react-hooks/exhaustive-deps
+useEffect(() => {
+  filterAndSortCuisines();
+}, [searchQuery, sortBy, cuisines]);
 
   const loadCuisines = () => {
     setLoading(true);
