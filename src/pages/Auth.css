@@ -1,0 +1,129 @@
+.auth-container {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.auth-card {
+  background: white;
+  border-radius: 16px;
+  padding: 3rem;
+  max-width: 450px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.auth-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  text-align: center;
+}
+
+.auth-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-error {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.form-group input {
+  padding: 0.875rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #ff6b6b;
+}
+
+.auth-submit {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+.auth-link-text {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #666;
+}
+
+.auth-link {
+  color: #ff6b6b;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+.demo-credentials {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f0f8ff;
+  border-radius: 8px;
+  border: 1px solid #b8daff;
+  font-size: 0.9rem;
+}
+
+.demo-credentials p {
+  margin: 0.25rem 0;
+  color: #004085;
+}
+
+.demo-credentials strong {
+  color: #002752;
+}
+
+.demo-note {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #666;
+}
+
+@media (max-width: 576px) {
+  .auth-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .auth-title {
+    font-size: 1.5rem;
+  }
+}

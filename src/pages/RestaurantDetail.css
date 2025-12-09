@@ -1,0 +1,168 @@
+.restaurant-detail-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #ff6b6b;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  transition: opacity 0.3s;
+}
+
+.back-button:hover {
+  opacity: 0.7;
+}
+
+.restaurant-header {
+  position: relative;
+  height: 400px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+
+.restaurant-header-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.restaurant-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
+  display: flex;
+  align-items: flex-end;
+}
+
+.restaurant-header-content {
+  padding: 3rem;
+  color: white;
+}
+
+.restaurant-header-title {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.restaurant-header-description {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  opacity: 0.95;
+}
+
+.restaurant-header-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.restaurant-header-badge {
+  background-color: #ffd93d;
+  color: #333;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.restaurant-header-rating {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.menu-section {
+  margin-top: 3rem;
+}
+
+.menu-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.menu-item {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.menu-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.menu-item-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.menu-item-info {
+  padding: 1.5rem;
+}
+
+.menu-item-name {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.menu-item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-item-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff6b6b;
+}
+
+.menu-item-button {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+}
+
+.no-meals {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .restaurant-header {
+    height: 300px;
+  }
+  
+  .restaurant-header-title {
+    font-size: 2rem;
+  }
+  
+  .restaurant-header-description {
+    font-size: 1rem;
+  }
+  
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+}
