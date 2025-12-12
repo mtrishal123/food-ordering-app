@@ -1,5 +1,4 @@
-import { createContext, useContext, useMemo } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { createContext, useContext, useMemo, useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 const CartContext = createContext();
@@ -12,8 +11,33 @@ export function CartProvider({ children }) {
     return user ? `cart_${user.id}` : 'cart_guest';
   }, [user]);
   
-  // Use user-specific cart key
-  const [cart, setCart] = useLocalStorage(cartKey, []);
+  // Load cart from localStorage
+  const loadCart = () => {
+    try {
+      const stored = localStorage.getItem(cartKey);
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      console.error('Error loading cart:', error);
+      return [];
+    }
+  };
+
+  const [cart, setCart] = useState(loadCart);
+
+  // Reload cart when cartKey changes (user login/logout)
+  useEffect(() => {
+    setCart(loadCart());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartKey]);
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(cartKey, JSON.stringify(cart));
+    } catch (error) {
+      console.error('Error saving cart:', error);
+    }
+  }, [cart, cartKey]);
 
   const addToCart = (meal, restaurantName) => {
     const existingItem = cart.find(item => item.idMeal === meal.idMeal);
