@@ -165,7 +165,7 @@
   .checkout-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .checkout-cart-section {
     position: static;
   }
@@ -175,12 +175,20 @@
   .checkout-container {
     padding: 1rem;
   }
-  
+
   .checkout-title {
     font-size: 2rem;
   }
-  
+
   .checkout-form-section {
     padding: 1.5rem;
   }
+}
+
+.wallet-error {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
 }

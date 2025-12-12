@@ -1,12 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useCart } from '../context/CartContext';
+import { useWallet } from '../context/WalletContext';
+import { useMessaging } from '../context/MessagingContext';
 import './Navbar.css';
 
 function Navbar() {
   const { user, logout } = useAuth();
   const { cart } = useCart();
+  const { balance } = useWallet();
+  const { unreadCount } = useMessaging();
   const navigate = useNavigate();
+  const [showWalletDropdown, setShowWalletDropdown] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -28,9 +34,17 @@ function Navbar() {
           </li>
           
           {user && (
-            <li className="navbar-item">
-              <Link to="/orders" className="navbar-link">My Orders</Link>
-            </li>
+            <>
+              <li className="navbar-item">
+                <Link to="/orders" className="navbar-link">My Orders</Link>
+              </li>
+              <li className="navbar-item">
+                <Link to="/messages" className="navbar-link cart-link">
+                  💬 Messages 
+                  {unreadCount > 0 && <span className="cart-badge">{unreadCount}</span>}
+                </Link>
+              </li>
+            </>
           )}
           
           <li className="navbar-item">
@@ -41,8 +55,20 @@ function Navbar() {
           
           {user ? (
             <>
-              <li className="navbar-item">
+              <li 
+                className="navbar-item navbar-user-dropdown"
+                onMouseEnter={() => setShowWalletDropdown(true)}
+                onMouseLeave={() => setShowWalletDropdown(false)}
+              >
                 <span className="navbar-user">Hi, {user.name}</span>
+                {showWalletDropdown && (
+                  <div className="wallet-dropdown">
+                    <div className="wallet-balance">
+                      💰 Wallet: ${balance.toFixed(2)}
+                    </div>
+                    <Link to="/wallet" className="wallet-link">Manage Wallet</Link>
+                  </div>
+                )}
               </li>
               <li className="navbar-item">
                 <button onClick={handleLogout} className="navbar-button">Logout</button>

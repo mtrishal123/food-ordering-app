@@ -1,9 +1,13 @@
 import { createContext, useContext } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useAuth } from '../hooks/useAuth';
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
+  const { user } = useAuth();
+  
+  const cartKey = user ? `cart_${user.id}` : 'cart_guest';
   const [cart, setCart] = useLocalStorage('cart', []);
 
   // Add item to cart

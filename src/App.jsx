@@ -7,8 +7,12 @@ import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import OrderHistory from './pages/OrderHistory';
+import Wallet from './pages/Wallet';
+import Messages from './pages/Messages';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { WalletProvider } from './context/WalletContext';
+import { MessagingProvider } from './context/MessagingContext';
 import './App.css';
 
 function ProtectedRoute({ children }) {
@@ -25,35 +29,55 @@ function App() {
   return (
     <HelmetProvider>
       <AuthProvider>
-        <CartProvider>
-          <Router>
-            <div className="App">
-              <Navbar />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/restaurant/:cuisine" element={<RestaurantDetail />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route 
-                  path="/checkout" 
-                  element={
-                    <ProtectedRoute>
-                      <Checkout />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/orders" 
-                  element={
-                    <ProtectedRoute>
-                      <OrderHistory />
-                    </ProtectedRoute>
-                  } 
-                />
-              </Routes>
-            </div>
-          </Router>
-        </CartProvider>
+        <WalletProvider>
+          <MessagingProvider>
+            <CartProvider>
+              <Router>
+                <div className="App">
+                  <Navbar />
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/restaurant/:cuisine" element={<RestaurantDetail />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route 
+                      path="/checkout" 
+                      element={
+                        <ProtectedRoute>
+                          <Checkout />
+                        </ProtectedRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/orders" 
+                      element={
+                        <ProtectedRoute>
+                          <OrderHistory />
+                        </ProtectedRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/wallet" 
+                      element={
+                        <ProtectedRoute>
+                          <Wallet />
+                        </ProtectedRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/messages" 
+                      element={
+                        <ProtectedRoute>
+                          <Messages />
+                        </ProtectedRoute>
+                      } 
+                    />
+                  </Routes>
+                </div>
+              </Router>
+            </CartProvider>
+          </MessagingProvider>
+        </WalletProvider>
       </AuthProvider>
     </HelmetProvider>
   );
