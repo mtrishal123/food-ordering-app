@@ -75,12 +75,24 @@ function MessagingWidget() {
   };
 
   // Update active chats when new messages arrive
-  useEffect(() => {
-    setActiveChats(activeChats.map(chat => ({
-      ...chat,
-      messages: conversations[chat.userId] || []
-    })));
-  }, [conversations]);
+  // Update active chats when new messages arrive
+useEffect(() => {
+  setActiveChats(currentChats => {
+    if (currentChats.length === 0) return currentChats;
+    
+    return currentChats.map(chat => {
+      const updatedMessages = conversations[chat.userId];
+      // Only update if messages changed
+      if (!updatedMessages || updatedMessages === chat.messages) {
+        return chat;
+      }
+      return {
+        ...chat,
+        messages: updatedMessages
+      };
+    });
+  });
+}, [conversations]);
 
   if (!user) return null;
 
