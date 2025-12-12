@@ -231,6 +231,7 @@
   display: flex;
   flex-direction: column;
   background: white;
+  position: relative;
 }
 
 .no-chat-selected {
@@ -339,71 +340,6 @@
   margin: 0;
 }
 
-.chat-input-form {
-  padding: 1.5rem;
-  border-top: 1px solid #e0e0e0;
-  display: flex;
-  gap: 1rem;
-  background: white;
-}
-
-.chat-input {
-  flex: 1;
-  padding: 0.875rem 1.25rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 25px;
-  font-size: 1rem;
-  transition: border-color 0.3s;
-}
-
-.chat-input:focus {
-  outline: none;
-  border-color: #ff6b6b;
-}
-
-.send-btn {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #ff6b6b;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.send-btn:hover:not(:disabled) {
-  background-color: #ff5252;
-  transform: scale(1.1);
-}
-
-.send-btn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-@media (max-width: 768px) {
-  .messages-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .messages-sidebar {
-    display: none;
-  }
-  
-  .messages-main {
-    grid-column: 1;
-  }
-  
-  .message-bubble {
-    max-width: 85%;
-  }
-}
-
 /* Transfer Money Styles */
 .chat-input-container {
   padding: 1.5rem;
@@ -432,6 +368,54 @@
 .transfer-toggle-btn:hover {
   transform: scale(1.1);
   box-shadow: 0 2px 8px rgba(255, 217, 61, 0.4);
+}
+
+.chat-input-form {
+  flex: 1;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 0.875rem 1.25rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 25px;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+}
+
+.send-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.send-btn:hover:not(:disabled) {
+  background-color: #ff5252;
+  transform: scale(1.1);
+}
+
+.send-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .messages-transfer-form {
@@ -616,4 +600,22 @@
 .notification-message {
   flex: 1;
   font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .messages-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .messages-sidebar {
+    display: none;
+  }
+  
+  .messages-main {
+    grid-column: 1;
+  }
+  
+  .message-bubble {
+    max-width: 85%;
+  }
 }
