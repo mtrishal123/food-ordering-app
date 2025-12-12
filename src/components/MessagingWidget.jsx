@@ -196,6 +196,7 @@ function ChatWindow({ chat, user, isMinimized, onClose, onMinimize, onMaximize, 
   const [showTransfer, setShowTransfer] = useState(false);
   const [transferAmount, setTransferAmount] = useState('');
   const [transferring, setTransferring] = useState(false);
+  const [notification, setNotification] = useState({ show: false, message: '', type: '' });
   const messagesEndRef = useRef(null);
   const { balance, transferMoney } = useWallet();
 
@@ -208,6 +209,13 @@ function ChatWindow({ chat, user, isMinimized, onClose, onMinimize, onMaximize, 
       scrollToBottom();
     }
   }, [chat.messages, isMinimized]);
+
+  const showNotification = (message, type = 'success') => {
+    setNotification({ show: true, message, type });
+    setTimeout(() => {
+      setNotification({ show: false, message: '', type: '' });
+    }, 3000);
+  };
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -222,12 +230,12 @@ function ChatWindow({ chat, user, isMinimized, onClose, onMinimize, onMaximize, 
     
     const amount = parseFloat(transferAmount);
     if (isNaN(amount) || amount <= 0) {
-      alert('Please enter a valid amount');
+      showNotification('Please enter a valid amount', 'error');
       return;
     }
 
     if (amount > balance) {
-      alert(`Insufficient balance. You have $${balance.toFixed(2)}`);
+      showNotification(`Insufficient balance. You have $${balance.toFixed(2)}`, 'error');
       return;
     }
 
@@ -243,9 +251,9 @@ function ChatWindow({ chat, user, isMinimized, onClose, onMinimize, onMaximize, 
       onSendMessage(chat.userId, `💰 Transferred $${amount.toFixed(2)}`);
       setTransferAmount('');
       setShowTransfer(false);
-      alert(`Successfully transferred $${amount.toFixed(2)} to ${chat.user.name}`);
+      showNotification(`Successfully transferred $${amount.toFixed(2)} to ${chat.user.name}`, 'success');
     } else {
-      alert(result.error);
+      showNotification(result.error, 'error');
     }
 
     setTransferring(false);
@@ -268,6 +276,15 @@ function ChatWindow({ chat, user, isMinimized, onClose, onMinimize, onMaximize, 
 
       {!isMinimized && (
         <>
+          {notification.show && (
+            <div className={`chat-notification ${notification.type}`}>
+              <span className="notification-icon">
+                {notification.type === 'success' ? '✓' : '⚠'}
+              </span>
+              <span className="notification-message">{notification.message}</span>
+            </div>
+          )}
+
           <div className="chat-window-messages">
             {chat.messages.map((msg) => (
               <div
