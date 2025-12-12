@@ -1,5 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useCart } from '../context/CartContext';
 import { useWallet } from '../context/WalletContext';
@@ -12,7 +11,6 @@ function Navbar() {
   const { balance } = useWallet();
   const { unreadCount } = useMessaging();
   const navigate = useNavigate();
-  const [showWalletDropdown, setShowWalletDropdown] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -55,20 +53,14 @@ function Navbar() {
           
           {user ? (
             <>
-              <li 
-                className="navbar-item navbar-user-dropdown"
-                onMouseEnter={() => setShowWalletDropdown(true)}
-                onMouseLeave={() => setShowWalletDropdown(false)}
-              >
+              <li className="navbar-item navbar-user-dropdown">
                 <span className="navbar-user">Hi, {user.name}</span>
-                {showWalletDropdown && (
-                  <div className="wallet-dropdown">
-                    <div className="wallet-balance">
-                      💰 Wallet: ${balance.toFixed(2)}
-                    </div>
-                    <Link to="/wallet" className="wallet-link">Manage Wallet</Link>
+                <div className="wallet-dropdown">
+                  <div className="wallet-balance">
+                    💰 Wallet: ${balance.toFixed(2)}
                   </div>
-                )}
+                  <Link to="/wallet" className="wallet-link">Manage Wallet</Link>
+                </div>
               </li>
               <li className="navbar-item">
                 <button onClick={handleLogout} className="navbar-button">Logout</button>

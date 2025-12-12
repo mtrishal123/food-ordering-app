@@ -13,6 +13,7 @@ import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WalletProvider } from './context/WalletContext';
 import { MessagingProvider } from './context/MessagingContext';
+import MessagingWidget from './components/MessagingWidget';
 import './App.css';
 
 function ProtectedRoute({ children }) {
@@ -73,6 +74,7 @@ function App() {
                       } 
                     />
                   </Routes>
+                  <MessagingWidget />
                 </div>
               </Router>
             </CartProvider>
