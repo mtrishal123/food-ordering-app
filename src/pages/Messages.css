@@ -403,3 +403,217 @@
     max-width: 85%;
   }
 }
+
+/* Transfer Money Styles */
+.chat-input-container {
+  padding: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  gap: 1rem;
+  background: white;
+  align-items: center;
+}
+
+.transfer-toggle-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd93d 0%, #ffb93d 100%);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.transfer-toggle-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(255, 217, 61, 0.4);
+}
+
+.messages-transfer-form {
+  padding: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  background: linear-gradient(to bottom, #fff, #f8f9fa);
+}
+
+.transfer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.transfer-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #999;
+  padding: 0.25rem;
+  transition: color 0.3s;
+}
+
+.transfer-close:hover {
+  color: #333;
+}
+
+.transfer-info {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f0f4ff;
+  border-radius: 8px;
+}
+
+.transfer-info p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.transfer-info p:first-child {
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.transfer-amount-input {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 3px solid #667eea;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.currency {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-right: 0.75rem;
+}
+
+.transfer-amount-input input {
+  flex: 1;
+  border: none;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  outline: none;
+}
+
+.transfer-amount-input input::placeholder {
+  color: #ccc;
+}
+
+.transfer-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.transfer-btn {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.transfer-btn.cancel {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.transfer-btn.cancel:hover {
+  background: #e0e0e0;
+}
+
+.transfer-btn.confirm {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.transfer-btn.confirm:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.transfer-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Notification Styles */
+.messages-notification {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: slideInDown 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+  max-width: 400px;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.messages-notification.success {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  color: white;
+}
+
+.messages-notification.error {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  color: white;
+}
+
+.notification-icon {
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.notification-message {
+  flex: 1;
+  font-size: 1rem;
+}
