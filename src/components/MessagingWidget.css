@@ -375,3 +375,153 @@
     flex-direction: column;
   }
 }
+
+/* Transfer Money Styles */
+.chat-window-input-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.transfer-toggle-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd93d 0%, #ffb93d 100%);
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.transfer-toggle-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(255, 217, 61, 0.4);
+}
+
+.chat-window-input {
+  flex: 1;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-window-transfer {
+  padding: 1rem;
+  border-top: 1px solid #e0e0e0;
+  background: linear-gradient(to bottom, #fff, #f8f9fa);
+}
+
+.transfer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.transfer-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #999;
+  padding: 0.25rem;
+}
+
+.transfer-close:hover {
+  color: #333;
+}
+
+.transfer-info {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #f0f4ff;
+  border-radius: 6px;
+}
+
+.transfer-info p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.transfer-info p:first-child {
+  font-weight: 600;
+  color: #333;
+}
+
+.transfer-amount-input {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.currency {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-right: 0.5rem;
+}
+
+.transfer-amount-input input {
+  flex: 1;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  outline: none;
+}
+
+.transfer-amount-input input::placeholder {
+  color: #ccc;
+}
+
+.transfer-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.transfer-btn {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.transfer-btn.cancel {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.transfer-btn.cancel:hover {
+  background: #e0e0e0;
+}
+
+.transfer-btn.confirm {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.transfer-btn.confirm:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.transfer-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

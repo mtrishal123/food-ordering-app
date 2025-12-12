@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useMessaging } from '../context/MessagingContext';
+import { useWallet } from '../context/WalletContext';
 import './MessagingWidget.css';
 
 function MessagingWidget() {
@@ -36,14 +37,11 @@ function MessagingWidget() {
     const otherUser = getOtherUser(userId);
     if (!otherUser) return;
     
-    // Check if chat already open
     if (activeChats.find(chat => chat.userId === userId)) {
-      // Move from minimized to active if needed
       setMinimizedChats(minimizedChats.filter(id => id !== userId));
       return;
     }
     
-    // Add to active chats (max 3)
     if (activeChats.length >= 3) {
       alert('Maximum 3 chats can be open at once');
       return;
@@ -74,37 +72,24 @@ function MessagingWidget() {
     return users.find(u => u.id === userId);
   };
 
-  // Update active chats when new messages arrive
-  // Update active chats when new messages arrive
-useEffect(() => {
-  setActiveChats(currentChats => {
-    if (currentChats.length === 0) return currentChats;
-    
-    return currentChats.map(chat => {
-      const updatedMessages = conversations[chat.userId];
-      // Only update if messages changed
-      if (!updatedMessages || updatedMessages === chat.messages) {
-        return chat;
-      }
-      return {
+  useEffect(() => {
+    setActiveChats(prevActiveChats => 
+      prevActiveChats.map(chat => ({
         ...chat,
-        messages: updatedMessages
-      };
-    });
-  });
-}, [conversations]);
+        messages: conversations[chat.userId] || []
+      }))
+    );
+  }, [conversations]);
 
   if (!user) return null;
 
   return (
     <>
-      {/* Main Widget Toggle */}
       <div className="messaging-widget-toggle" onClick={toggleWidget}>
         <span className="widget-icon">💬</span>
         {unreadCount > 0 && <span className="widget-badge">{unreadCount}</span>}
       </div>
 
-      {/* Main Widget Panel */}
       {isOpen && (
         <div className="messaging-widget-panel">
           <div className="widget-header">
@@ -188,7 +173,6 @@ useEffect(() => {
         </div>
       )}
 
-      {/* Active Chat Windows */}
       <div className="chat-windows-container">
         {activeChats.map((chat) => (
           <ChatWindow
@@ -209,7 +193,11 @@ useEffect(() => {
 
 function ChatWindow({ chat, user, isMinimized, onClose, onMinimize, onMaximize, onSendMessage }) {
   const [messageText, setMessageText] = useState('');
+  const [showTransfer, setShowTransfer] = useState(false);
+  const [transferAmount, setTransferAmount] = useState('');
+  const [transferring, setTransferring] = useState(false);
   const messagesEndRef = useRef(null);
+  const { balance, transferMoney } = useWallet();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -227,6 +215,40 @@ function ChatWindow({ chat, user, isMinimized, onClose, onMinimize, onMaximize, 
     
     onSendMessage(chat.userId, messageText);
     setMessageText('');
+  };
+
+  const handleTransfer = async (e) => {
+    e.preventDefault();
+    
+    const amount = parseFloat(transferAmount);
+    if (isNaN(amount) || amount <= 0) {
+      alert('Please enter a valid amount');
+      return;
+    }
+
+    if (amount > balance) {
+      alert(`Insufficient balance. You have $${balance.toFixed(2)}`);
+      return;
+    }
+
+    setTransferring(true);
+
+    // Simulate processing delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const result = transferMoney(chat.userId, amount);
+    
+    if (result.success) {
+      // Send a system message about the transfer
+      onSendMessage(chat.userId, `💰 Transferred $${amount.toFixed(2)}`);
+      setTransferAmount('');
+      setShowTransfer(false);
+      alert(`Successfully transferred $${amount.toFixed(2)} to ${chat.user.name}`);
+    } else {
+      alert(result.error);
+    }
+
+    setTransferring(false);
   };
 
   return (
@@ -263,15 +285,72 @@ function ChatWindow({ chat, user, isMinimized, onClose, onMinimize, onMaximize, 
             <div ref={messagesEndRef} />
           </div>
 
-          <form onSubmit={handleSend} className="chat-window-input">
-            <input
-              type="text"
-              value={messageText}
-              onChange={(e) => setMessageText(e.target.value)}
-              placeholder="Type a message..."
-            />
-            <button type="submit" disabled={!messageText.trim()}>➤</button>
-          </form>
+          {showTransfer ? (
+            <form onSubmit={handleTransfer} className="chat-window-transfer">
+              <div className="transfer-header">
+                <span>Transfer Money</span>
+                <button 
+                  type="button" 
+                  onClick={() => setShowTransfer(false)}
+                  className="transfer-close"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="transfer-info">
+                <p>To: {chat.user.name}</p>
+                <p>Your Balance: ${balance.toFixed(2)}</p>
+              </div>
+              <div className="transfer-amount-input">
+                <span className="currency">$</span>
+                <input
+                  type="number"
+                  value={transferAmount}
+                  onChange={(e) => setTransferAmount(e.target.value)}
+                  placeholder="0.00"
+                  step="0.01"
+                  min="0.01"
+                  max={balance}
+                  autoFocus
+                />
+              </div>
+              <div className="transfer-actions">
+                <button 
+                  type="button" 
+                  onClick={() => setShowTransfer(false)}
+                  className="transfer-btn cancel"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  className="transfer-btn confirm"
+                  disabled={transferring || !transferAmount}
+                >
+                  {transferring ? 'Processing...' : 'Transfer'}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <div className="chat-window-input-container">
+              <button 
+                className="transfer-toggle-btn"
+                onClick={() => setShowTransfer(true)}
+                title="Transfer Money"
+              >
+                💰
+              </button>
+              <form onSubmit={handleSend} className="chat-window-input">
+                <input
+                  type="text"
+                  value={messageText}
+                  onChange={(e) => setMessageText(e.target.value)}
+                  placeholder="Type a message..."
+                />
+                <button type="submit" disabled={!messageText.trim()}>➤</button>
+              </form>
+            </div>
+          )}
         </>
       )}
     </div>
