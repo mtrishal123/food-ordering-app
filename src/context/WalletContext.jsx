@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 const WalletContext = createContext();
@@ -7,19 +7,19 @@ export function WalletProvider({ children }) {
   const { user } = useAuth();
   const [balance, setBalance] = useState(0);
 
-  useEffect(() => {
-    if (user) {
-      loadBalance();
-    } else {
+  const loadBalance = useCallback(() => {
+    if (!user) {
       setBalance(0);
+      return;
     }
-  }, [user]);
-
-  const loadBalance = () => {
     const wallets = JSON.parse(localStorage.getItem('wallets') || '{}');
     const userBalance = wallets[user.id] || 0;
     setBalance(userBalance);
-  };
+  }, [user]);
+
+  useEffect(() => {
+    loadBalance();
+  }, [loadBalance]);
 
   const saveBalance = (newBalance) => {
     const wallets = JSON.parse(localStorage.getItem('wallets') || '{}');

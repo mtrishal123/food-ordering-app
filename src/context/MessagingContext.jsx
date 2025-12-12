@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 const MessagingContext = createContext();
@@ -8,13 +8,7 @@ export function MessagingProvider({ children }) {
   const [conversations, setConversations] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  useEffect(() => {
-    if (user) {
-      loadConversations();
-    }
-  }, [user]);
-
-  const loadConversations = () => {
+  const loadConversations = useCallback(() => {
     if (!user) return;
     
     const allMessages = JSON.parse(localStorage.getItem('messages') || '[]');
@@ -44,7 +38,13 @@ export function MessagingProvider({ children }) {
       msg => msg.recipientId === user.id && !msg.read
     ).length;
     setUnreadCount(unread);
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      loadConversations();
+    }
+  }, [user, loadConversations]);
 
   const sendMessage = (recipientId, content) => {
     if (!user) return { success: false, error: 'Not authenticated' };
