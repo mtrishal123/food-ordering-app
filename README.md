@@ -3,8 +3,6 @@
 ## Live Deployment
 🌐 **URL**: https://onlineorderfood.netlify.app/
 
-## GitHub Repository
-📦 **Repo**: https://github.com/mtrishal123/food-ordering-app
 
 ## Lighthouse Scores
 - **Performance**: 75/100
@@ -71,8 +69,6 @@ Both techniques were not covered in class and demonstrate advanced React pattern
 
 ## Team Members
 - Trishal Varma Mudunuri
-- Hanlin Cheng
-- Shuhao Hu
 
 ## Deployment
 Deployed on Netlify with automatic builds from GitHub main branch.
